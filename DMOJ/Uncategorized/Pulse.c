@@ -1,0 +1,2 @@
+#include <stdio.h>
+int main () { short N, S, T; scanf("%hd%hd%hd", &N, &S, &T); short answer = 0, wave_time; while(N--) { scanf("%hd", &wave_time); wave_time *= 2; answer += wave_time >= S && wave_time <= T; } printf("%hd", answer); }

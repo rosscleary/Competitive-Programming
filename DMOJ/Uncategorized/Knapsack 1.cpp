@@ -1,48 +1,33 @@
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
-long int max_value(long int n, long int weight_left, long int weight[], long int value[]) {
-long int result;
+#define int long long
 
-if (weight_left==0 || n==0)
-    return 0;
-    
-if (weight[n-1]>weight_left)
-    result=max_value(n-1,weight_left,weight,value);
-    
-else {
+signed main() {
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
-result=max((max_value(n-1,weight_left,weight,value)),(max_value(n-1,weight_left-weight[n-1],weight,value)+value[n-1]));
+  int N, W;
+  cin >> N >> W;
+  vector<int> w(N), v(N);
+  for(int i = 0; i < N; i++) {
+    cin >> w[i] >> v[i];
+  }
 
-}
+  vector<int> dp(W + 1);
+  for(int i = N - 1; i >= 0; i--) {
+    vector<int> new_dp(W + 1);
+    for(int j = 0; j <= W; j++) {
+      int leave = dp[j];
+      int take = -1;
+      if(j - w[i] >= 0) {
+        take = v[i] + dp[j - w[i]];
+      }
+      new_dp[j] = max(leave, take);
+    }
+    dp = new_dp;
+  }
 
-return result;
+  cout << dp[W] << '\n';
 
-}
-
-int main () {
-    
-long int num_items;
-long int *value;
-long int *weight;
-long int max_weight;
-
-cin>>num_items;
-cin>>max_weight;
-
-value=new long int[num_items];
-weight=new long int[num_items];
-
-for (int i=0; i<=num_items-1; i++) {
-cin>>weight[i];
-cin>>value[i];
-}
-
-long int n=num_items;
-long int weight_left=max_weight;
-
-cout<<max_value(n,weight_left,weight,value)<<endl;
-
-return 0;
+  return 0;
 }

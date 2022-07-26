@@ -29,6 +29,6 @@ signed main() {
   }
 
   cout << curr << '\n';
-  
-	return 0;
+
+  return 0;
 }
